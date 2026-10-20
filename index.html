@@ -16,7 +16,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%2314283C'/%3E%3Ctext x='16' y='23' font-size='20' text-anchor='middle' fill='%23C9A24B' font-family='serif'%3EH%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600&family=Source+Serif+4:wght@600&display=swap" rel="stylesheet">
-<script type="application/ld+json" id="ld">{"@context":"https://schema.org","@type":"AccountingService","name":"Haktaş Muhasebe","url":"https://haktasmuhasebe.com/","telephone":"+905364938050","email":"haktas@haktasmuhasebe.com.tr","description":"Defter tutma, vergi beyannameleri, SGK ve bordro, şirket kuruluşu ve mali danışmanlık hizmetleri.","areaServed":{"@type":"Country","name":"Türkiye"},"address":{"@type":"PostalAddress","addressCountry":"TR"}}</script>
+<script type="application/ld+json" id="ld">{"@context":"https://schema.org","@type":"AccountingService","name":"Haktaş Muhasebe","url":"https://haktasmuhasebe.com/","telephone":"+905364938050","email":"haktas@haktasmuhasebe.com.tr","description":"Defter tutma, vergi beyannameleri, SGK ve bordro, şirket kuruluşu ve mali danışmanlık hizmetleri.","areaServed":{"@type":"Country","name":"Türkiye"},"address":{"@type":"PostalAddress","streetAddress":"Kozyatağı Mahallesi, Şemsettin Günaltay Caddesi No: 108/2","addressLocality":"Kadıköy","addressRegion":"İstanbul","addressCountry":"TR"}}</script>
 <style>
 :root{--ink:#14283C;--paper:#F5F6F4;--white:#fff;--brass:#8A6A22;--gold:#C9A24B;--slate:#566676;--line:#D9DEE2}
 *{box-sizing:border-box}html{scroll-behavior:smooth}[hidden]{display:none!important}
@@ -32,14 +32,9 @@ nav{display:flex;gap:28px;font-size:15px}nav a{text-decoration:none;color:var(--
 .btn:hover{background:#1d3a56}.btn.o{background:transparent;color:var(--ink)}.btn.o:hover{background:var(--white)}
 .btn.g{background:var(--gold);border-color:var(--gold);color:var(--ink)}.btn.g:hover{background:#d8b45e}
 :focus-visible{outline:3px solid var(--gold);outline-offset:2px}
-.hero{padding:88px 0 96px}.hero .w{display:grid;grid-template-columns:7fr 5fr;gap:64px;align-items:center}
+.hero{padding:96px 0 112px}.hero .w{display:grid;grid-template-columns:7fr 5fr;gap:64px;align-items:center}
 h1{font-size:clamp(36px,5.2vw,60px);letter-spacing:-.01em}
 .hero p{max-width:52ch;color:var(--slate);font-size:19px;margin:24px 0 36px}.cta{display:flex;gap:12px;flex-wrap:wrap}
-.ledger{background:var(--white);border:1px solid var(--line);border-top:4px solid var(--gold);padding:28px 28px 10px}
-.ledger h2{font-size:20px;margin-bottom:10px}.ledger ol{list-style:none;margin:0;padding:0;counter-reset:s}
-.ledger li{counter-increment:s;display:grid;grid-template-columns:34px 1fr;padding:14px 0;border-top:1px solid var(--line)}
-.ledger li::before{content:counter(s);font:600 18px 'Source Serif 4',Georgia,serif;color:var(--brass)}
-.ledger li span{display:block;color:var(--slate);font-size:14.5px}
 section{padding:88px 0}.sec h2,.about h2{font-size:clamp(28px,3.6vw,40px)}.sec h2{max-width:22ch;margin-bottom:48px}
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0 48px}
 .grid article{border-top:2px solid var(--ink);padding:20px 0 40px}.grid h3{font-size:21px;margin-bottom:10px}.grid p{margin:0;color:var(--slate);font-size:16px}
@@ -51,9 +46,32 @@ section{padding:88px 0}.sec h2,.about h2{font-size:clamp(28px,3.6vw,40px)}.sec h
 form{display:grid;gap:14px}label{font-size:14px;color:#B9C4CF;display:grid;gap:6px}
 input,textarea{font:inherit;padding:12px 14px;border:1px solid transparent;background:#fff;color:var(--ink);width:100%}textarea{min-height:130px;resize:vertical}
 .hp{position:absolute;left:-9999px}#st{min-height:1.5em;margin:0}
-footer{background:#0E1D2C;color:#9FB0C0;font-size:14px;padding:28px 0}footer .w{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}footer a{color:#C9D5E0}
-@media(max-width:860px){.hero .w,.contact .w,.about.hasimg .w{grid-template-columns:1fr;gap:40px}.grid{grid-template-columns:1fr}nav{display:none}.hero,section{padding:56px 0}}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+.stage{position:relative}.stage::before{content:"";position:absolute;inset:26px -22px -22px 26px;border:2px solid var(--gold)}
+.ph{margin:0;position:relative;z-index:1;aspect-ratio:4/5;overflow:hidden;background:var(--ink)}.ph svg,.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ph img{animation:kb 9s ease-out both}
+.steps{background:#fff;border-block:1px solid var(--line);padding:0!important}
+.steps ol{display:grid;grid-template-columns:repeat(4,1fr);list-style:none;margin:0 auto;padding:0 24px;max-width:1120px;counter-reset:s}
+.steps li{counter-increment:s;padding:32px 28px 32px 0}.steps li+li{padding-left:28px;border-left:1px solid var(--line)}
+.steps li::before{content:counter(s);font:600 28px 'Source Serif 4',Georgia,serif;color:var(--brass);display:block;margin-bottom:4px}
+.steps b{display:block;font-size:17px}.steps span{color:var(--slate);font-size:15px}
+.band{position:relative;overflow:hidden;color:#fff;padding:120px 0;background:linear-gradient(135deg,#1d3a56,#0E1D2C)}
+.band img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.band::after{content:"";position:absolute;inset:0;background:rgba(14,29,44,.7)}
+.band .w{position:relative;z-index:1}.band h2{font-size:clamp(32px,4.6vw,56px);max-width:18ch}.band p{color:#C9D5E0;max-width:56ch;font-size:19px;margin:22px 0 0}
+.grid article{position:relative;transition:padding .35s}.grid article::before{content:"";position:absolute;left:0;top:-2px;height:2px;width:100%;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .5s ease}
+.grid article:hover::before{transform:scaleX(1)}.grid article:hover h3{color:var(--brass)}.grid h3{transition:color .3s}
+header{transition:box-shadow .3s}header.sc{box-shadow:0 8px 28px rgba(20,40,60,.09)}
+nav a::after{content:"";display:block;height:2px;background:var(--gold);transform:scaleX(0);transition:transform .3s;margin-top:2px}nav a:hover::after{transform:scaleX(1)}
+.map{width:100%;height:230px;border:0;margin-top:6px;filter:grayscale(.35)}
+footer{background:#0E1D2C;color:#9FB0C0;font-size:14.5px;padding:56px 0 24px}.fg{display:grid;grid-template-columns:2fr 2.4fr 1.2fr;gap:40px}
+.fg b{display:block;color:#fff;font:600 20px 'Source Serif 4',Georgia,serif}.fg a{color:#C9D5E0;text-decoration:none}.fg p{margin:0 0 6px}.fl a{display:block;margin-bottom:6px}
+.cp{margin-top:36px;padding-top:20px;border-top:1px solid #243a50;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+@keyframes up{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}@keyframes kb{from{transform:scale(1.1)}to{transform:scale(1)}}@keyframes dr{to{stroke-dashoffset:0}}
+.hero h1{animation:up .9s .05s cubic-bezier(.2,.7,.2,1) both}.hero p{animation:up .9s .2s cubic-bezier(.2,.7,.2,1) both}.hero .cta{animation:up .9s .35s cubic-bezier(.2,.7,.2,1) both}.stage{animation:up 1.1s .2s cubic-bezier(.2,.7,.2,1) both}
+.draw{stroke-dasharray:520;stroke-dashoffset:520;animation:dr 2.4s .7s ease forwards}
+.rv{opacity:0;transform:translateY(18px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.7,.2,1)}.rv.in{opacity:1;transform:none}
+@media(max-width:860px){.hero .w,.contact .w,.about.hasimg .w{grid-template-columns:1fr;gap:40px}.grid{grid-template-columns:1fr}nav{display:none}.hero,section{padding:56px 0}.stage::before{display:none}.ph{aspect-ratio:4/3}.steps ol{grid-template-columns:1fr 1fr}.steps li,.steps li+li{padding:20px 16px;border-left:0;border-top:1px solid var(--line)}.fg{grid-template-columns:1fr}.band{padding:72px 0}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,::before,::after{animation:none!important;transition:none!important}.draw{stroke-dashoffset:0}}
 </style>
 </head>
 <body>
@@ -69,15 +87,13 @@ footer{background:#0E1D2C;color:#9FB0C0;font-size:14px;padding:28px 0}footer .w{
     <p data-k="hero_text">Haktaş Muhasebe; işletmeniz için defter tutma, vergi beyannameleri, bordro ve mali danışmanlık hizmetlerini tek elden yürütür.</p>
     <div class="cta"><a class="btn g" href="#iletisim">Bize ulaşın</a><a class="btn o" data-wa href="https://wa.me/905364938050">WhatsApp ile yazın</a></div>
   </div>
-  <aside class="ledger" aria-label="Çalışma düzenimiz"><h2>Her ay aynı düzen</h2>
-    <ol>
-      <li><div>Belge toplama<span>Fatura, gider ve banka belgeleriniz bize ulaşır.</span></div></li>
-      <li><div>Kayıt ve mutabakat<span>Hesaplarınız kaydedilir ve kontrol edilir.</span></div></li>
-      <li><div>Beyanname<span>Vergi ve SGK bildirimleriniz süresinde hazırlanır.</span></div></li>
-      <li><div>Raporlama<span>Sonucu sade bir özetle size iletiriz.</span></div></li>
-    </ol>
-  </aside>
+  <div class="stage"><figure class="ph"><svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1d3a56"/><stop offset="1" stop-color="#0E1D2C"/></linearGradient></defs><rect width="400" height="500" fill="url(#g)"/><g stroke="#fff" stroke-opacity=".08"><line x1="0" y1="50" x2="400" y2="50"/><line x1="0" y1="100" x2="400" y2="100"/><line x1="0" y1="150" x2="400" y2="150"/><line x1="0" y1="200" x2="400" y2="200"/><line x1="0" y1="250" x2="400" y2="250"/><line x1="0" y1="300" x2="400" y2="300"/><line x1="0" y1="350" x2="400" y2="350"/><line x1="0" y1="400" x2="400" y2="400"/><line x1="0" y1="450" x2="400" y2="450"/></g><g fill="#fff" fill-opacity=".07"><rect x="36" y="330" width="46" height="170"/><rect x="100" y="280" width="46" height="220"/><rect x="164" y="300" width="46" height="200"/><rect x="228" y="200" width="46" height="300"/><rect x="292" y="230" width="46" height="270"/><rect x="346" y="130" width="46" height="370"/></g><polyline class="draw" points="20,400 100,340 170,360 250,240 320,250 385,120" fill="none" stroke="#C9A24B" stroke-width="3"/><circle cx="385" cy="120" r="7" fill="#C9A24B"/></svg><img data-img="hero_img" alt="Haktaş Muhasebe ofisi" hidden></figure></div>
 </div></div>
+<section class="steps" aria-label="Çalışma düzenimiz"><ol>
+<li><b>Belge toplama</b><span>Fatura, gider ve banka belgeleriniz bize ulaşır.</span></li>
+<li><b>Kayıt ve mutabakat</b><span>Hesaplarınız kaydedilir ve kontrol edilir.</span></li>
+<li><b>Beyanname</b><span>Vergi ve SGK bildirimleriniz süresinde hazırlanır.</span></li>
+<li><b>Raporlama</b><span>Sonucu sade bir özetle size iletiriz.</span></li></ol></section>
 <section class="sec" id="hizmetler"><div class="w">
   <h2 data-k="svc_title">Mali işlerinizin tamamı için tek adres</h2>
   <div class="grid">
@@ -89,6 +105,7 @@ footer{background:#0E1D2C;color:#9FB0C0;font-size:14px;padding:28px 0}footer .w{
     <article><h3 data-k="s6_t">Mali danışmanlık</h3><p data-k="s6_d">Vergi planlaması, teşvik ve mevzuat konularında işletmenize özel danışmanlık.</p></article>
   </div>
 </div></section>
+<section class="band"><img data-img="band_img" alt="" hidden loading="lazy"><div class="w"><h2 data-k="band_title">Rakamlar bizde, kararlar sizde.</h2><p data-k="band_text">Her ay düzenli raporla işletmenizin durumunu net görür, vergi ve mevzuat değişikliklerinden önceden haberdar olursunuz.</p></div></section>
 <section class="about" id="hakkimizda"><div class="w">
   <img data-img="about_img" alt="Haktaş Muhasebe ofisi" hidden loading="lazy">
   <div><h2 data-k="about_title">Hesaplarınız düzenli olsun, siz işinize odaklanın.</h2>
@@ -99,9 +116,10 @@ footer{background:#0E1D2C;color:#9FB0C0;font-size:14px;padding:28px 0}footer .w{
     <h2>İletişim</h2>
     <p><strong>Telefon</strong><a class="big" data-tel href="tel:+905364938050" data-k="phone">0536 493 80 50</a></p>
     <p><strong>E-posta</strong><a data-mail href="mailto:haktas@haktasmuhasebe.com.tr" data-k="email">haktas@haktasmuhasebe.com.tr</a></p>
-    <p class="opt" hidden><strong>Adres</strong><span data-k="address" data-opt></span></p>
+    <p class="opt"><strong>Adres</strong><span data-k="address" data-opt>Kozyatağı Mahallesi, Şemsettin Günaltay Caddesi No: 108/2, Kadıköy / İstanbul</span></p>
     <p class="opt" hidden><strong>Çalışma saatleri</strong><span data-k="hours" data-opt></span></p>
-    <p><a data-link="maps_url" hidden>Haritada aç</a> <a data-link="instagram" hidden rel="noopener">Instagram</a> <a data-link="linkedin" hidden rel="noopener">LinkedIn</a></p>
+    <p style="margin-top:14px"><a data-link="maps_url" href="https://www.google.com/maps/search/?api=1&amp;query=Kozyata%C4%9F%C4%B1+Mahallesi+%C5%9Eemsettin+G%C3%BCnaltay+Caddesi+108%2F2+Kad%C4%B1k%C3%B6y+%C4%B0stanbul" rel="noopener">Yol tarifi al</a> <a data-link="instagram" hidden rel="noopener">Instagram</a> <a data-link="linkedin" hidden rel="noopener">LinkedIn</a></p>
+  <iframe class="map" id="map" title="Ofis konumu" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Kozyata%C4%9F%C4%B1+Mahallesi+%C5%9Eemsettin+G%C3%BCnaltay+Caddesi+108%2F2+Kad%C4%B1k%C3%B6y+%C4%B0stanbul&amp;output=embed"></iframe>
   </div>
   <form id="f">
     <label>Adınız soyadınız<input name="name" required autocomplete="name"></label>
@@ -114,15 +132,22 @@ footer{background:#0E1D2C;color:#9FB0C0;font-size:14px;padding:28px 0}footer .w{
   </form>
 </div></section>
 </main>
-<footer><div class="w"><span data-k="footer_text">© 2026 Haktaş Muhasebe. Tüm hakları saklıdır.</span><span>haktasmuhasebe.com</span></div></footer>
+<footer><div class="w fg"><div><b data-k="brand">Haktaş Muhasebe</b><p data-k="brand_sub">Mali Müşavirlik</p></div>
+<div><p data-k="address" data-opt>Kozyatağı Mahallesi, Şemsettin Günaltay Caddesi No: 108/2, Kadıköy / İstanbul</p><p><a data-tel href="tel:+905364938050"><span data-k="phone">0536 493 80 50</span></a></p><p><a data-mail data-k="email" href="mailto:haktas@haktasmuhasebe.com.tr">haktas@haktasmuhasebe.com.tr</a></p></div>
+<div class="fl"><a href="#hizmetler">Hizmetler</a><a href="#hakkimizda">Hakkımızda</a><a href="#iletisim">İletişim</a></div></div>
+<div class="w cp"><span data-k="footer_text">© 2026 Haktaş Muhasebe. Tüm hakları saklıdır.</span><span>haktasmuhasebe.com</span></div></footer>
 <script src="config.js"></script>
 <script>
 (async()=>{
 const C=window.CFG||{},q=s=>[...document.querySelectorAll(s)];let d={};
+q('.grid article,.about .w>*,.contact .w>*,.band .w>*').forEach((e,i)=>{e.classList.add('rv');e.style.transitionDelay=(e.matches('.grid article')?(i%3)*100:0)+'ms'});
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});q('.rv').forEach(e=>io.observe(e));
+addEventListener('scroll',()=>document.querySelector('header').classList.toggle('sc',scrollY>8),{passive:true});
 if(C.url)try{const r=await fetch(C.url+'/rest/v1/site_content?id=eq.1&select=data',{headers:{apikey:C.key}});const j=await r.json();d=(j[0]&&j[0].data)||{}}catch(e){}
 q('[data-k]').forEach(e=>{const v=d[e.dataset.k];if(v===undefined)return;e.textContent=v;if(e.hasAttribute('data-opt')){(e.closest('.opt')||e).hidden=!v}});
 q('[data-img]').forEach(e=>{const v=d[e.dataset.img];if(v){e.src=v;e.hidden=false}});
 q('[data-link]').forEach(e=>{const v=d[e.dataset.link];if(v){e.href=v;e.hidden=false}});
+if(d.address){document.getElementById('map').src='https://www.google.com/maps?q='+encodeURIComponent(d.address)+'&output=embed';if(!d.maps_url)document.querySelector('[data-link=maps_url]').href='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(d.address)}
 if(d.about_img)document.querySelector('.about').classList.add('hasimg');
 if(d.meta_title)document.title=d.meta_title;
 if(d.meta_desc)document.querySelector('meta[name=description]').content=d.meta_desc;

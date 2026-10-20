@@ -32,9 +32,9 @@ img.p{max-height:90px;margin-top:8px;display:block}.msg{background:#fff;border:1
 const C=window.CFG||{},$=s=>document.querySelector(s);
 const F=[['SEO ve Google','meta_title','Sayfa başlığı (Google’da görünen başlık)','t'],['SEO ve Google','meta_desc','Sayfa açıklaması (160 karakter civarı)','a'],
 ['Genel','brand','Firma adı','t'],['Genel','brand_sub','Firma alt başlığı','t'],['Genel','logo_img','Logo (boş bırakırsanız yalnızca yazı görünür)','i'],
-['Ana bölüm','hero_title','Ana başlık','t'],['Ana bölüm','hero_text','Ana metin','a'],['Hizmetler','svc_title','Bölüm başlığı','t']];
+['Ana bölüm','hero_title','Ana başlık','t'],['Ana bölüm','hero_text','Ana metin','a'],['Ana bölüm','hero_img','Ana görsel (dikey, 4:5 oranı en iyisi; boşsa varsayılan çizim görünür)','i'],['Hizmetler','svc_title','Bölüm başlığı','t']];
 for(let i=1;i<=6;i++)F.push(['Hizmetler','s'+i+'_t',i+'. hizmet adı','t'],['Hizmetler','s'+i+'_d',i+'. hizmet açıklaması','a']);
-F.push(['Hakkımızda','about_title','Başlık','t'],['Hakkımızda','about_text','Metin','a'],['Hakkımızda','about_img','Görsel (boş bırakırsanız görünmez)','i'],
+F.push(['Vurgu bandı','band_title','Başlık','t'],['Vurgu bandı','band_text','Metin','a'],['Vurgu bandı','band_img','Arka plan görseli (geniş, yatay)','i'],['Hakkımızda','about_title','Başlık','t'],['Hakkımızda','about_text','Metin','a'],['Hakkımızda','about_img','Görsel (boş bırakırsanız görünmez)','i'],
 ['İletişim','phone','Telefon','t'],['İletişim','email','E-posta','t'],['İletişim','address','Adres (boşsa gösterilmez)','a'],['İletişim','hours','Çalışma saatleri (boşsa gösterilmez)','t'],
 ['İletişim','maps_url','Google Haritalar bağlantısı','t'],['İletişim','instagram','Instagram bağlantısı','t'],['İletişim','linkedin','LinkedIn bağlantısı','t'],['Alt bilgi','footer_text','Alt bilgi metni','t']);
 const note=m=>{const n=$('#note');n.textContent=m;n.hidden=false;setTimeout(()=>n.hidden=true,3000)};
