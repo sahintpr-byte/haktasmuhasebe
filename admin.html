@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><title>Yönetim paneli | Haktaş Muhasebe</title>
+<style>
+*{box-sizing:border-box}[hidden]{display:none!important}
+body{margin:0;font:16px/1.5 system-ui,'Segoe UI',sans-serif;background:#F1F3F5;color:#14283C}
+.bar{background:#14283C;color:#fff;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:2;gap:12px}
+.bar b{font-size:18px}.bar div{display:flex;gap:8px;flex-wrap:wrap}
+main{max-width:760px;margin:24px auto;padding:0 16px 80px}
+fieldset{background:#fff;border:1px solid #D9DEE2;margin:0 0 20px;padding:8px 20px 20px}legend{font-weight:700;padding:0 8px}
+label{display:block;margin-top:14px;font-size:14px;color:#566676}
+input,textarea{display:block;width:100%;margin-top:4px;padding:10px 12px;font:inherit;border:1px solid #B8C1C9;background:#fff;color:#14283C}textarea{min-height:90px}
+button{font:inherit;font-weight:600;padding:10px 18px;border:0;background:#14283C;color:#fff;cursor:pointer}button.s{background:#C9A24B;color:#14283C}button.l{background:transparent;border:1px solid #fff}
+.box{max-width:380px;margin:80px auto;background:#fff;padding:28px;border:1px solid #D9DEE2}.box h1{font-size:20px;margin:0 0 4px}
+img.p{max-height:90px;margin-top:8px;display:block}.msg{background:#fff;border:1px solid #D9DEE2;padding:14px 18px;margin-bottom:12px}.msg small{color:#566676;display:block}.msg p{white-space:pre-wrap;margin:8px 0 0}
+#note{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:#14283C;color:#fff;padding:12px 20px}
+</style>
+</head>
+<body>
+<div id="login" class="box" hidden><h1>Yönetim paneli</h1><p style="color:#566676;margin-top:0">E-posta ve şifrenizle giriş yapın.</p>
+<label>E-posta<input id="em" type="email" autocomplete="username"></label><label>Şifre<input id="pw" type="password" autocomplete="current-password"></label>
+<p id="err" style="color:#B3261E"></p><button id="go">Giriş yap</button></div>
+<div id="app" hidden>
+<div class="bar"><b>Haktaş Muhasebe | Yönetim</b><div><button class="l" id="tabE">İçerik</button><button class="l" id="tabM">Mesajlar</button><button class="s" id="save">Değişiklikleri kaydet</button><button class="l" id="out">Çıkış</button></div></div>
+<main><div id="ed"></div><div id="ms" hidden></div></main></div>
+<div id="note" hidden></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="config.js"></script>
+<script>
+const C=window.CFG||{},$=s=>document.querySelector(s);
+const F=[['SEO ve Google','meta_title','Sayfa başlığı (Google’da görünen başlık)','t'],['SEO ve Google','meta_desc','Sayfa açıklaması (160 karakter civarı)','a'],
+['Genel','brand','Firma adı','t'],['Genel','brand_sub','Firma alt başlığı','t'],['Genel','logo_img','Logo (boş bırakırsanız yalnızca yazı görünür)','i'],
+['Ana bölüm','hero_title','Ana başlık','t'],['Ana bölüm','hero_text','Ana metin','a'],['Hizmetler','svc_title','Bölüm başlığı','t']];
+for(let i=1;i<=6;i++)F.push(['Hizmetler','s'+i+'_t',i+'. hizmet adı','t'],['Hizmetler','s'+i+'_d',i+'. hizmet açıklaması','a']);
+F.push(['Hakkımızda','about_title','Başlık','t'],['Hakkımızda','about_text','Metin','a'],['Hakkımızda','about_img','Görsel (boş bırakırsanız görünmez)','i'],
+['İletişim','phone','Telefon','t'],['İletişim','email','E-posta','t'],['İletişim','address','Adres (boşsa gösterilmez)','a'],['İletişim','hours','Çalışma saatleri (boşsa gösterilmez)','t'],
+['İletişim','maps_url','Google Haritalar bağlantısı','t'],['İletişim','instagram','Instagram bağlantısı','t'],['İletişim','linkedin','LinkedIn bağlantısı','t'],['Alt bilgi','footer_text','Alt bilgi metni','t']);
+const note=m=>{const n=$('#note');n.textContent=m;n.hidden=false;setTimeout(()=>n.hidden=true,3000)};
+if(!C.url){document.body.innerHTML='<div class="box"><h1>Kurulum gerekli</h1><p>config.js dosyasına Supabase adresi ve anahtarını yazın (README.txt).</p></div>';throw 0}
+const sb=supabase.createClient(C.url,C.key);
+async function defaults(){const p=new DOMParser().parseFromString(await (await fetch('index.html')).text(),'text/html'),o={meta_title:p.title,meta_desc:p.querySelector('meta[name=description]').content};
+p.querySelectorAll('[data-k]').forEach(e=>o[e.dataset.k]=e.textContent.trim());p.querySelectorAll('[data-img]').forEach(e=>o[e.dataset.img]='');p.querySelectorAll('[data-link]').forEach(e=>o[e.dataset.link]='');return o}
+async function build(){const {data}=await sb.from('site_content').select('data').eq('id',1).maybeSingle(),v={...await defaults(),...(data&&data.data||{})},ed=$('#ed');ed.innerHTML='';let g='',fs;
+for(const [grp,k,lab,ty] of F){if(grp!==g){g=grp;fs=document.createElement('fieldset');fs.innerHTML='<legend></legend>';fs.firstChild.textContent=g;ed.append(fs)}
+const l=document.createElement('label');l.textContent=lab;const i=document.createElement(ty==='a'?'textarea':'input');i.dataset.k=k;i.value=v[k]||'';l.append(i);
+if(ty==='i'){i.placeholder='Görsel adresi (yükleyince otomatik dolar)';const pv=document.createElement('img');pv.className='p';pv.hidden=!i.value;pv.src=i.value;const fi=document.createElement('input');fi.type='file';fi.accept='image/*';
+fi.onchange=async()=>{const f=fi.files[0];if(!f)return;const n=k+'-'+Date.now()+'.'+f.name.split('.').pop().toLowerCase();const {error}=await sb.storage.from('site').upload(n,f,{contentType:f.type});
+if(error)return note('Yükleme hatası: '+error.message);i.value=sb.storage.from('site').getPublicUrl(n).data.publicUrl;pv.src=i.value;pv.hidden=false;note('Görsel yüklendi. Kaydetmeyi unutmayın.')};l.append(fi,pv)}
+fs.append(l)}}
+async function msgs(){const {data,error}=await sb.from('messages').select('*').order('created_at',{ascending:false}).limit(100),m=$('#ms');m.innerHTML='';
+if(error||!data.length){m.textContent=error?error.message:'Henüz mesaj yok.';return}
+data.forEach(r=>{const d=document.createElement('div');d.className='msg';const s=document.createElement('small');s.textContent=new Date(r.created_at).toLocaleString('tr-TR')+' | '+[r.name,r.phone,r.email].filter(Boolean).join(' | ');
+const p=document.createElement('p');p.textContent=r.message;const b=document.createElement('button');b.textContent='Sil';b.style.marginTop='10px';b.onclick=async()=>{await sb.from('messages').delete().eq('id',r.id);msgs()};d.append(s,p,b);m.append(d)})}
+async function show(){const {data}=await sb.auth.getSession(),ok=!!data.session;$('#login').hidden=ok;$('#app').hidden=!ok;if(ok)build()}
+$('#go').onclick=async()=>{const {error}=await sb.auth.signInWithPassword({email:$('#em').value,password:$('#pw').value});$('#err').textContent=error?'Giriş yapılamadı: e-posta veya şifre hatalı.':'';show()};
+$('#out').onclick=async()=>{await sb.auth.signOut();show()};
+$('#tabE').onclick=()=>{$('#ed').hidden=false;$('#ms').hidden=true};$('#tabM').onclick=()=>{$('#ed').hidden=true;$('#ms').hidden=false;msgs()};
+$('#save').onclick=async()=>{const data={};document.querySelectorAll('#ed [data-k]').forEach(i=>data[i.dataset.k]=i.value.trim());
+const {error}=await sb.from('site_content').upsert({id:1,data,updated_at:new Date().toISOString()});note(error?'Kaydedilemedi: '+error.message:'Kaydedildi. Site güncellendi.')};
+show();
+</script>
+</body>
+</html>
