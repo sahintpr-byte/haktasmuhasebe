@@ -7,6 +7,7 @@
 <meta name="description" content="Haktaş Muhasebe: defter tutma, vergi beyannameleri, SGK ve bordro, şirket kuruluşu ve mali danışmanlık hizmetleri. Hemen arayın: 0536 493 80 50.">
 <link rel="canonical" href="https://haktasmuhasebe.com/">
 <meta name="robots" content="index,follow,max-image-preview:large">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="theme-color" content="#14283C">
 <meta property="og:type" content="website"><meta property="og:locale" content="tr_TR"><meta property="og:site_name" content="Haktaş Muhasebe">
 <meta property="og:title" content="Haktaş Muhasebe | Mali Müşavirlik ve Muhasebe Hizmetleri">
@@ -124,7 +125,7 @@ footer{background:#0E1D2C;color:#9FB0C0;font-size:14.5px;padding:56px 0 24px}.fg
   <form id="f">
     <label>Adınız soyadınız<input name="name" required autocomplete="name"></label>
     <label>Telefon<input name="phone" type="tel" autocomplete="tel"></label>
-    <label>E-posta<input name="email" type="email" autocomplete="email"></label>
+    <label>E-posta<input name="email" type="email" autocomplete="email" maxlength="254"></label>
     <label>Mesajınız<textarea name="message" required maxlength="3000"></textarea></label>
     <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
     <button class="btn g" type="submit">Mesajı gönder</button>
@@ -136,6 +137,7 @@ footer{background:#0E1D2C;color:#9FB0C0;font-size:14.5px;padding:56px 0 24px}.fg
 <div><p data-k="address" data-opt>Kozyatağı Mahallesi, Şemsettin Günaltay Caddesi No: 108/2, Kadıköy / İstanbul</p><p><a data-tel href="tel:+905364938050"><span data-k="phone">0536 493 80 50</span></a></p><p><a data-mail data-k="email" href="mailto:haktas@haktasmuhasebe.com.tr">haktas@haktasmuhasebe.com.tr</a></p></div>
 <div class="fl"><a href="#hizmetler">Hizmetler</a><a href="#hakkimizda">Hakkımızda</a><a href="#iletisim">İletişim</a></div></div>
 <div class="w cp"><span data-k="footer_text">© 2026 Haktaş Muhasebe. Tüm hakları saklıdır.</span><span>haktasmuhasebe.com</span></div></footer>
+<noscript><div class="w" style="padding:16px 0">Bu sayfanın iletişim formu için JavaScript gereklidir. Bize telefon veya e-posta ile ulaşabilirsiniz.</div></noscript>
 <script src="config.js"></script>
 <script>
 (async()=>{
@@ -143,7 +145,7 @@ const C=window.CFG||{},q=s=>[...document.querySelectorAll(s)];let d={};
 q('.grid article,.about .w>*,.contact .w>*,.band .w>*').forEach((e,i)=>{e.classList.add('rv');e.style.transitionDelay=(e.matches('.grid article')?(i%3)*100:0)+'ms'});
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});q('.rv').forEach(e=>io.observe(e));
 addEventListener('scroll',()=>document.querySelector('header').classList.toggle('sc',scrollY>8),{passive:true});
-if(C.url)try{const r=await fetch(C.url+'/rest/v1/site_content?id=eq.1&select=data',{headers:{apikey:C.key}});const j=await r.json();d=(j[0]&&j[0].data)||{}}catch(e){}
+if(C.url&&C.key)try{const r=await fetch(C.url.replace(/\/$/,'')+'/rest/v1/site_content?id=eq.1&select=data',{headers:{apikey:C.key},credentials:'omit'});if(r.ok){const j=await r.json();d=(j[0]&&j[0].data)||{}}}catch(e){console.warn('İçerik servisine ulaşılamadı.',e)}
 q('[data-k]').forEach(e=>{const v=d[e.dataset.k];if(v===undefined)return;e.textContent=v;if(e.hasAttribute('data-opt')){(e.closest('.opt')||e).hidden=!v}});
 q('[data-img]').forEach(e=>{const v=d[e.dataset.img];if(v){e.src=v;e.hidden=false}});
 q('[data-link]').forEach(e=>{const v=d[e.dataset.link];if(v){e.href=v;e.hidden=false}});
@@ -151,15 +153,15 @@ if(d.address){document.getElementById('map').src='https://www.google.com/maps?q=
 if(d.about_img)document.querySelector('.about').classList.add('hasimg');
 if(d.meta_title)document.title=d.meta_title;
 if(d.meta_desc)document.querySelector('meta[name=description]').content=d.meta_desc;
-const t=s=>document.querySelector(`[data-k=${s}]`).textContent.trim(),phone=t('phone'),email=t('email'),dg=phone.replace(/\D/g,'').replace(/^0/,'');
+const t=s=>{const e=document.querySelector(`[data-k="${s}"]`);return e?e.textContent.trim():''},phone=t('phone'),email=t('email'),dg=phone.replace(/\D/g,'').replace(/^0/,'');
 q('[data-tel]').forEach(e=>e.href='tel:+90'+dg);q('[data-wa]').forEach(e=>e.href='https://wa.me/90'+dg);q('[data-mail]').forEach(e=>e.href='mailto:'+email);
 const ld=document.getElementById('ld'),o=JSON.parse(ld.textContent);o.name=t('brand');o.telephone='+90'+dg;o.email=email;
-if(d.address)o.address.streetAddress=d.address;if(d.hours)o.openingHours=d.hours;if(d.maps_url)o.hasMap=d.maps_url;if(d.meta_desc)o.description=d.meta_desc;
+if(d.address)o.address.streetAddress=d.address;if(d.hours)o.openingHours=d.hours;if(d.meta_desc)o.description=d.meta_desc;
 if(d.about_img)o.image=d.about_img;o.sameAs=[d.instagram,d.linkedin].filter(Boolean);ld.textContent=JSON.stringify(o);
 const f=document.getElementById('f'),st=document.getElementById('st');
-f.onsubmit=async e=>{e.preventDefault();const x=Object.fromEntries(new FormData(f));if(x.website)return;st.textContent='Gönderiliyor…';
-if(C.url){try{const r=await fetch(C.url+'/rest/v1/messages',{method:'POST',headers:{apikey:C.key,'Content-Type':'application/json',Prefer:'return=minimal'},body:JSON.stringify({name:x.name,phone:x.phone,email:x.email,message:x.message})});if(r.ok){f.reset();st.textContent='Mesajınız alındı. En kısa sürede size dönüş yapacağız.';return}}catch(_){}}
-location.href='mailto:'+email+'?subject='+encodeURIComponent('Web sitesi mesajı: '+x.name)+'&body='+encodeURIComponent(x.message+'\n\n'+x.name+' '+x.phone);st.textContent='E-posta uygulamanız açılıyor…'};
+f.onsubmit=async e=>{e.preventDefault();const x=Object.fromEntries(new FormData(f));if(x.website)return;if(!x.name.trim()||!x.message.trim()){st.textContent='Lütfen adınızı ve mesajınızı yazın.';return}const submit=f.querySelector('button[type=submit]');submit.disabled=true;st.textContent='Gönderiliyor…';
+if(C.url&&C.key){try{const r=await fetch(C.url.replace(/\/$/,'')+'/rest/v1/messages',{method:'POST',headers:{apikey:C.key,'Content-Type':'application/json',Prefer:'return=minimal'},credentials:'omit',body:JSON.stringify({name:x.name.trim().slice(0,160),phone:x.phone.trim().slice(0,40),email:x.email.trim().slice(0,254),message:x.message.trim().slice(0,3000)})});if(r.ok){f.reset();st.textContent='Mesajınız alındı. En kısa sürede size dönüş yapacağız.';submit.disabled=false;return}}catch(_){} }
+if(email){location.href='mailto:'+email+'?subject='+encodeURIComponent('Web sitesi mesajı: '+x.name)+'&body='+encodeURIComponent(x.message+'\n\n'+x.name+' '+x.phone);st.textContent='E-posta uygulamanız açılıyor…'}else{st.textContent='Mesaj gönderilemedi. Lütfen telefonla ulaşın.'}submit.disabled=false};
 })();
 </script>
 </body>

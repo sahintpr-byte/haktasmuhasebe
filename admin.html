@@ -38,7 +38,7 @@ F.push(['Vurgu bandı','band_title','Başlık','t'],['Vurgu bandı','band_text',
 ['İletişim','phone','Telefon','t'],['İletişim','email','E-posta','t'],['İletişim','address','Adres (boşsa gösterilmez)','a'],['İletişim','hours','Çalışma saatleri (boşsa gösterilmez)','t'],
 ['İletişim','maps_url','Google Haritalar bağlantısı','t'],['İletişim','instagram','Instagram bağlantısı','t'],['İletişim','linkedin','LinkedIn bağlantısı','t'],['Alt bilgi','footer_text','Alt bilgi metni','t']);
 const note=m=>{const n=$('#note');n.textContent=m;n.hidden=false;setTimeout(()=>n.hidden=true,3000)};
-if(!C.url){document.body.innerHTML='<div class="box"><h1>Kurulum gerekli</h1><p>config.js dosyasına Supabase adresi ve anahtarını yazın (README.txt).</p></div>';throw 0}
+if(!C.url||!C.key){document.body.innerHTML='<div class="box"><h1>Kurulum gerekli</h1><p>config.js dosyasına Supabase adresi ve anahtarını yazın (README.txt).</p></div>';throw 0}
 const sb=supabase.createClient(C.url,C.key);
 async function defaults(){const p=new DOMParser().parseFromString(await (await fetch('index.html')).text(),'text/html'),o={meta_title:p.title,meta_desc:p.querySelector('meta[name=description]').content};
 p.querySelectorAll('[data-k]').forEach(e=>o[e.dataset.k]=e.textContent.trim());p.querySelectorAll('[data-img]').forEach(e=>o[e.dataset.img]='');p.querySelectorAll('[data-link]').forEach(e=>o[e.dataset.link]='');return o}
@@ -46,15 +46,15 @@ async function build(){const {data}=await sb.from('site_content').select('data')
 for(const [grp,k,lab,ty] of F){if(grp!==g){g=grp;fs=document.createElement('fieldset');fs.innerHTML='<legend></legend>';fs.firstChild.textContent=g;ed.append(fs)}
 const l=document.createElement('label');l.textContent=lab;const i=document.createElement(ty==='a'?'textarea':'input');i.dataset.k=k;i.value=v[k]||'';l.append(i);
 if(ty==='i'){i.placeholder='Görsel adresi (yükleyince otomatik dolar)';const pv=document.createElement('img');pv.className='p';pv.hidden=!i.value;pv.src=i.value;const fi=document.createElement('input');fi.type='file';fi.accept='image/*';
-fi.onchange=async()=>{const f=fi.files[0];if(!f)return;const n=k+'-'+Date.now()+'.'+f.name.split('.').pop().toLowerCase();const {error}=await sb.storage.from('site').upload(n,f,{contentType:f.type});
+fi.onchange=async()=>{const f=fi.files[0];if(!f)return;if(!f.type.startsWith('image/'))return note('Yalnızca görsel dosyaları yüklenebilir.');if(f.size>5*1024*1024)return note('Görsel boyutu 5 MB’tan küçük olmalı.');const ext=(f.name.split('.').pop()||'jpg').toLowerCase().replace(/[^a-z0-9]/g,'');const n=k+'-'+crypto.randomUUID()+'.'+ext;const {error}=await sb.storage.from('site').upload(n,f,{contentType:f.type,upsert:false});
 if(error)return note('Yükleme hatası: '+error.message);i.value=sb.storage.from('site').getPublicUrl(n).data.publicUrl;pv.src=i.value;pv.hidden=false;note('Görsel yüklendi. Kaydetmeyi unutmayın.')};l.append(fi,pv)}
 fs.append(l)}}
 async function msgs(){const {data,error}=await sb.from('messages').select('*').order('created_at',{ascending:false}).limit(100),m=$('#ms');m.innerHTML='';
-if(error||!data.length){m.textContent=error?error.message:'Henüz mesaj yok.';return}
+if(error||!data?.length){m.textContent=error?error.message:'Henüz mesaj yok.';return}
 data.forEach(r=>{const d=document.createElement('div');d.className='msg';const s=document.createElement('small');s.textContent=new Date(r.created_at).toLocaleString('tr-TR')+' | '+[r.name,r.phone,r.email].filter(Boolean).join(' | ');
 const p=document.createElement('p');p.textContent=r.message;const b=document.createElement('button');b.textContent='Sil';b.style.marginTop='10px';b.onclick=async()=>{await sb.from('messages').delete().eq('id',r.id);msgs()};d.append(s,p,b);m.append(d)})}
 async function show(){const {data}=await sb.auth.getSession(),ok=!!data.session;$('#login').hidden=ok;$('#app').hidden=!ok;if(ok)build()}
-$('#go').onclick=async()=>{const {error}=await sb.auth.signInWithPassword({email:$('#em').value,password:$('#pw').value});$('#err').textContent=error?'Giriş yapılamadı: e-posta veya şifre hatalı.':'';show()};
+$('#go').onclick=async()=>{const b=$('#go');b.disabled=true;const {error}=await sb.auth.signInWithPassword({email:$('#em').value.trim(),password:$('#pw').value});$('#err').textContent=error?'Giriş yapılamadı: e-posta veya şifre hatalı.':'';b.disabled=false;show()};
 $('#out').onclick=async()=>{await sb.auth.signOut();show()};
 $('#tabE').onclick=()=>{$('#ed').hidden=false;$('#ms').hidden=true};$('#tabM').onclick=()=>{$('#ed').hidden=true;$('#ms').hidden=false;msgs()};
 $('#save').onclick=async()=>{const data={};document.querySelectorAll('#ed [data-k]').forEach(i=>data[i.dataset.k]=i.value.trim());
